@@ -2,6 +2,7 @@
 ; COLORETTE
 ScriptVersion := 1.01
 ; Script created using Autohotkey (http://www.autohotkey.com)
+; SVN handling by Tortoise SVN ;)
 ; AHK version: AHK_L (www.autohotkey.net/~Lexikos/AutoHotkey_L)
 ; Library dependancies:
 ; - DLG.ahk for color Dialogue
