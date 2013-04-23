@@ -18,8 +18,7 @@ ScriptVersion := 1.01
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance, Force
-;
-;
+
 Hotkey, Rbutton, CatchColor
 Hotkey, !Rbutton, CatchColor
 ColoretteIcon := A_ScriptFullPath
@@ -32,24 +31,23 @@ If (FileExist("colorette.exe"))
    Menu, Tray, Icon, Colorette.exe
 ; MAIN LOOOP: Pick Color
 
-Loop ;Note: Some code from below is not needed
+Gui, -Caption +ToolWindow +LastFound +AlwaysOnTop +Border
+Gui, Font, Bold
+Gui, Add, Text, xCenter yCenter cGray vVar, 0000000
+
+Loop
 {
-CoordMode, Mouse, Screen
-MouseGetPos X, Y
-PixelGetColor Color, X, Y, RGB
-ColorD := Color ;build an int based variable
-StringRight, color, color, 6 ;removes 0x prefix
-SetFormat, IntegerFast, d
-ColorD += 0  ; Sets Var (which previously contained 11) to be 0xb.
-ColorD .= ""  ; Necessary due to the "fast" mode.
+   CoordMode, Mouse, Screen
+   MouseGetPos X, Y
+   PixelGetColor Color, X, Y, RGB
+   StringRight, color, color, 6 ;removes 0x prefix
 
-Gui, 2:Color, %color%
-CoordMode, Pixel 
-mX := X - 25
-mY := Y - 80
-Gui, 2:-Caption +ToolWindow +LastFound +AlwaysOnTop +Border
-
-Gui, 2:Show, NoActivate x%mX% y%mY% w50 h50
+   Gui, Color, %color%
+   CoordMode, Pixel 
+   mX := X - 25
+   mY := Y - 80
+   GuiControl,,Var,%color%
+   Gui, Show, NoActivate x%mX% y%mY% w50 h50
 }
 
 CatchColor: ; Catch Hover'd color
@@ -87,7 +85,7 @@ else
 ClipSaved := "" ; Empty var
 ; 
 RestoreCursors()
-Gui, 2:Destroy
+Gui, Destroy
 Sleep 500
 Hotkey, !Rbutton, Off
 Hotkey, Rbutton, Off ; Position this in a nice place
@@ -104,7 +102,7 @@ ExitApp
 return
 
 Space::  
-Gui, 2:Destroy
+Gui, Destroy
 RestoreCursors()
 Hotkey, Rbutton, Off
 Dlg_Color(color)
